@@ -20,5 +20,4 @@ function prevStep() {
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  // Traitez les données du formulaire ici
 });

@@ -43,8 +43,8 @@ body main section form div.slide {
   justify-content: center;
   margin: 1rem 0;
 }
-body main section form div.slide label {
-  margin-right: 1rem;
+body main section form div.slide#step2, body main section form div.slide#step3 {
+  display: none;
 }
 body::before {
   content: "";

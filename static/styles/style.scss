@@ -1,0 +1,50 @@
+/* Imports */
+@import "/node_modules/normalize.css/normalize.css";
+
+:root {
+  // Primary
+  --white: #fff;
+  --black: #000;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
+  color: var(--black);
+
+  main {
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url("/static/img/moon-background.png");
+    background-position: center bottom 30%;
+    z-index: -1;
+  }
+}

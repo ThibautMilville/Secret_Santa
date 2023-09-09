@@ -24,17 +24,35 @@ body {
 
   main {
 
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
+    section {
+      padding: 2rem;
+      background-color: var(--white);
+      border-radius: 1rem;
 
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      h1 {
+        font-size: 2rem;
+        margin: 0 0 1rem 0;
+        text-align: center;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        div.slide {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          justify-content: center;
+          margin: 1rem 0;
+
+          label {
+            margin-right: 1rem;
+          }
+        }
+      }
     }
   }
 

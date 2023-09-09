@@ -20,16 +20,31 @@ body {
   font-size: 16px;
   color: var(--black);
 }
-body main h1 {
+body main section {
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: 1rem;
+}
+body main section h1 {
   font-size: 2rem;
-  margin-bottom: 1rem;
+  margin: 0 0 1rem 0;
   text-align: center;
 }
-body main form {
+body main section form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+body main section form div.slide {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 1rem 0;
+}
+body main section form div.slide label {
+  margin-right: 1rem;
 }
 body::before {
   content: "";

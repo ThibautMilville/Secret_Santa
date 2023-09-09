@@ -1,8 +1,15 @@
 export default class formLogic {
   constructor() {
-    this.currentStep = 1;
+    // Elements
     this.form = document.getElementById("multistep-form");
-    this.slides = document.querySelectorAll(".slide");
+    this.slides = document.querySelectorAll("div.slide");
+    this.nextButtons = document.querySelectorAll('.next-button');
+    this.prevButtons = document.querySelectorAll('.prev-button');
+
+    // Properties
+    this.currentStep = 1;
+
+    this.load();
   }
 
   // Methods
@@ -28,5 +35,18 @@ export default class formLogic {
 
   // Bindings
   bindEvents() {
+    // Next button
+    this.nextButtons.forEach( nextButton => {
+      nextButton.addEventListener('click', function () {
+        this.nextStep();
+      }.bind(this));
+    });
+
+    // Previous button
+    this.prevButtons.forEach( prevButton => {
+      prevButton.addEventListener('click', function () {
+        this.prevStep();
+      }.bind(this));
+    });
   }
 }

@@ -1,23 +1,21 @@
-let currentStep = 1;
-const form = document.getElementById("multistep-form");
-const slides = document.querySelectorAll(".slide");
+import formLogic from "./classes/formLogic.js";
 
-function nextStep() {
-  if (currentStep < slides.length) {
-    slides[currentStep - 1].style.display = "none";
-    currentStep++;
-    slides[currentStep - 1].style.display = "block";
-  }
-}
+const form = new formLogic();
 
-function prevStep() {
-  if (currentStep > 1) {
-    slides[currentStep - 1].style.display = "none";
-    currentStep--;
-    slides[currentStep - 1].style.display = "block";
-  }
-}
+document.addEventListener('DOMContentLoaded', function () {
+  const nextButtons = document.querySelectorAll('.next-button');
+  const prevButtons = document.querySelectorAll('.prev-button');
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
+  nextButtons.forEach( nextButton => {
+    nextButton.addEventListener('click', function () {
+      form.nextStep();
+    });
+    
+  });
+
+  prevButtons.forEach( prevButton => {
+    prevButton.addEventListener('click', function () {
+      form.prevStep();
+    });
+  });
 });

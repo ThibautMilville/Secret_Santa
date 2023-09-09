@@ -20,6 +20,11 @@
           <label for="email">Email</label>
           <input type="email" name="email" id="email" placeholder="Your email" required>
           <button class="next-button">Next</button>
+          <!-- Progress bar -->
+          <div class="progress-indicator">
+            <span class="active"></span>
+            <span></span>
+            <span></span>
         </div>
         <div class="slide" id="step2">
           <h2>Participants</h2>
@@ -30,12 +35,22 @@
           <button>Add</button>
           <button class="prev-button">Previous</button>
           <button class="next-button">Next</button>
+          <!-- Progress bar -->
+          <div class="progress-indicator">
+            <span></span>
+            <span class="active"></span>
+            <span></span>
         </div>
         <div class="slide" id="step3">
           <label for="message">Message</label>
           <textarea name="message" id="message" cols="30" rows="3" placeholder="Your message" required></textarea>
           <button class="prev-button">Previous</button>
           <button type="submit" onclick="send()">Send</button>
+          <!-- Progress bar -->
+          <div class="progress-indicator">
+            <span></span>
+            <span></span>
+            <span class="active"></span>
         </div>
       </form>
     </section>

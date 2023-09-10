@@ -7,12 +7,12 @@ participants = [] # List of all participants
 # Route to the index page
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == 'POST':
-        participant_name = request.form['participantName']
+    # if request.method == 'POST':
+        # participant_name = request.form['participantName']
         # Recuperate the name of the participant from the form
 
         # Add the name of the participant to the list
-        participants.append(participant_name)
+        # participants.append(participant_name)
 
     return render_template('index.html', participants=participants)
 

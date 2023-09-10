@@ -70,6 +70,48 @@ body {
             font-size: 1rem;
           }
 
+          div.participants-list {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            margin-bottom: 1rem;
+
+            div.participant {
+              width: 100%;
+              display: grid;
+              grid-template-columns: 1fr 2fr 1fr;
+              align-items: center;
+              justify-content: center;
+              margin: 0 0 0.5rem 0;
+
+              span {
+                display: flex;
+                align-items: center;
+                justify-content: flex-start;
+                font-size: 1rem;
+                border-right: 1px solid var(--gray);
+
+                &:nth-child(2) {
+                  justify-content: center;
+                }
+              }
+
+              button {
+                width: 40%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                justify-self: flex-end;
+                margin: 0;
+                padding: 0.4rem;
+
+                i {
+                  font-size: 0.6rem;
+                }
+              }
+            }
+          }
+
           textarea {
             width: 100%;
             padding: 0.8rem;

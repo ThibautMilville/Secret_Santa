@@ -31,6 +31,9 @@
         </div>
         <div class="slide" id="step2">
           <h2>Participants</h2>
+          <!-- Participants list (hidden) -->
+          <div class="participants-list">
+          </div>
           <label for="participant">Participant</label>
           <input type="text" name="participant" id="participant" placeholder="Name" required>
           <label for="participant_email">Email</label>
@@ -49,7 +52,7 @@
         </div>
         <div class="slide" id="step3">
           <label for="message">Message</label>
-          <textarea name="message" id="message" rows="3" placeholder="Your message" required></textarea>
+          <textarea name="message" id="message" rows="3" placeholder="Your message"></textarea>
           <button class="prev-button last-one"><i class="fa-solid fa-arrow-left"></i>Previous</button>
           <button type="submit" onclick="send()">Send</button>
           <!-- Progress bar -->

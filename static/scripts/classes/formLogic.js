@@ -18,7 +18,7 @@ export default class formLogic {
   }
 
   nextStep() {
-    if (this.currentStep < this.slides.length) {
+    if ((this.currentStep < this.slides.length) && !this.checkEmptyFields()) {
       this.slides[this.currentStep - 1].classList.remove("active");
       this.currentStep++;
       this.slides[this.currentStep - 1].classList.add("active");
@@ -31,6 +31,20 @@ export default class formLogic {
       this.currentStep--;
       this.slides[this.currentStep - 1].classList.add("active");
     }
+  }
+
+  checkEmptyFields() {
+    // Check if there are empty fields in the current slide
+    let emptyFields = false;
+    let inputs = this.slides[this.currentStep - 1].querySelectorAll('input');
+
+    inputs.forEach(input => {
+      if (input.value === '') {
+        emptyFields = true;
+      }
+    });
+    
+    return emptyFields;
   }
 
   // Bindings

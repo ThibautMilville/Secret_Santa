@@ -109,4 +109,10 @@ body::before {
   background-image: url("/static/img/moon-background.png");
   background-position: center bottom 30%;
   z-index: -1;
+}
+
+@media (max-width: 768px) {
+  body main {
+    width: 85%;
+  }
 }/*# sourceMappingURL=style.css.map */

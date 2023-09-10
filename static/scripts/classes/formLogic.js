@@ -19,17 +19,17 @@ export default class formLogic {
 
   nextStep() {
     if (this.currentStep < this.slides.length) {
-      this.slides[this.currentStep - 1].style.display = "none";
+      this.slides[this.currentStep - 1].classList.remove("active");
       this.currentStep++;
-      this.slides[this.currentStep - 1].style.display = "flex";
+      this.slides[this.currentStep - 1].classList.add("active");
     }
   }
 
   prevStep() {
     if (this.currentStep > 1) {
-      this.slides[this.currentStep - 1].style.display = "none";
+      this.slides[this.currentStep - 1].classList.remove("active");
       this.currentStep--;
-      this.slides[this.currentStep - 1].style.display = "flex";
+      this.slides[this.currentStep - 1].classList.add("active");
     }
   }
 

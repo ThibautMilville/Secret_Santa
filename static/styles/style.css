@@ -3,6 +3,7 @@
 :root {
   --white: #fff;
   --black: #000;
+  --gray: #ccc;
 }
 
 * {
@@ -42,11 +43,10 @@ body main section form {
 }
 body main section form div.slide {
   min-width: 95%;
-  display: flex;
+  display: none;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  transition: display 0.3s ease-in-out;
 }
 body main section form div.slide h2 {
   font-size: 1.5rem;
@@ -59,16 +59,25 @@ body main section form div.slide label {
 body main section form div.slide input {
   width: 100%;
   padding: 0.8rem;
-  border: 1px solid #ccc;
+  border: 1px solid var(--gray);
   border-radius: 0.5rem;
   margin: 0 0 1rem 0;
   font-size: 1rem;
+}
+body main section form div.slide textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid var(--gray);
+  border-radius: 0.5rem;
+  margin: 0 0 1rem 0;
+  font-size: 1rem;
+  resize: none;
 }
 body main section form div.slide button {
   width: 100%;
   padding: 0.8rem;
   margin: 1rem 0 2rem 0;
-  border: 1px solid #ccc;
+  border: 1px solid var(--gray);
   border-radius: 0.5rem;
   font-size: 1rem;
   font-weight: 600;
@@ -86,7 +95,13 @@ body main section form div.slide button i.fa-arrow-right {
   margin-left: 0.3rem;
 }
 body main section form div.slide button.add-a-participant {
-  margin: 1rem 0 0.8rem 0;
+  margin: 0.6rem 0 0.8rem 0;
+}
+body main section form div.slide button.last-one {
+  margin: 1rem 0 0 0;
+}
+body main section form div.slide button[type=submit] {
+  margin: 0.8rem 0 2rem 0;
 }
 body main section form div.slide div.progress-buttons {
   width: 100%;
@@ -118,8 +133,8 @@ body main section form div.slide div.progress-indicator span {
 body main section form div.slide div.progress-indicator span.active {
   background-color: var(--white);
 }
-body main section form div.slide#step2, body main section form div.slide#step3 {
-  display: none;
+body main section form div.slide.active {
+  display: flex;
 }
 body::before {
   content: "";

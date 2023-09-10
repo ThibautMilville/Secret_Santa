@@ -50,6 +50,20 @@ export default class formLogic {
     `;
     this.participantsList.appendChild(newParticipant);
     this.participantsList.style.display = 'flex';
+    this.removeAParticipant();
+  }
+
+  removeAParticipant() {
+    let removeButtons = document.querySelectorAll('.remove-participant');
+    removeButtons.forEach(removeButton => {
+      removeButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        this.participantsList.removeChild(removeButton.parentNode);
+        if (this.participantsList.children.length === 0) {
+          this.participantsList.style.display = 'none';
+        }
+      }.bind(this));
+    });
   }
 
   checkEmptyFields() {
@@ -82,10 +96,11 @@ export default class formLogic {
         this.prevStep();
       }.bind(this));
     });
-    // Add a participant button
+    // Add and remove a participant buttons
     this.addAParticipantButton.addEventListener('click', function(e) {
       e.preventDefault();
       this.addAParticipant();
+      this.removeAParticipant();
     }.bind(this));
   }
 }

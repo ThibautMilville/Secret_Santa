@@ -21,7 +21,7 @@
           <input type="text" name="name" id="name" placeholder="Your name" required>
           <label for="email">Email</label>
           <input type="email" name="email" id="email" placeholder="Your email" required>
-          <button class="next-button">Next<i class="fa-solid fa-arrow-right"></i></button>
+          <button type="button" class="next-button">Next<i class="fa-solid fa-arrow-right"></i></button>
           <!-- Progress bar -->
           <div class="progress-indicator">
             <span class="active"></span>
@@ -38,10 +38,10 @@
           <input type="text" name="participant" id="participant" placeholder="Name">
           <label for="participant_email">Email</label>
           <input type="email" name="participant_email" id="participant_email" placeholder="Email">
-          <button class="add-a-participant">Add</button>
+          <button type="button" class="add-a-participant">Add</button>
           <div class="progress-buttons">
-            <button class="prev-button"><i class="fa-solid fa-arrow-left"></i>Previous</button>
-            <button class="next-button">Next<i class="fa-solid fa-arrow-right"></i></button>
+            <button type="button" class="prev-button"><i class="fa-solid fa-arrow-left"></i>Previous</button>
+            <button type="button" class="next-button">Next<i class="fa-solid fa-arrow-right"></i></button>
           </div>
           <!-- Progress bar -->
           <div class="progress-indicator">
@@ -53,8 +53,8 @@
         <div class="slide" id="step3">
           <label for="message">Message</label>
           <textarea name="message" id="message" rows="3" placeholder="Your message"></textarea>
-          <button class="prev-button last-one"><i class="fa-solid fa-arrow-left"></i>Previous</button>
-          <button type="submit" onclick="send()">Send</button>
+          <button type="button" class="prev-button last-one"><i class="fa-solid fa-arrow-left"></i>Previous</button>
+          <button type="submit" id="submit-button">Send</button>
           <!-- Progress bar -->
           <div class="progress-indicator">
             <span></span>

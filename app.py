@@ -2,20 +2,25 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-participants = [] # List of all participants
+participants = []  # List of all participants
+message = None
+
 
 # Route to the index page
-@app.route('/', methods=['GET', 'POST'])
+@app.route("/", methods=["GET", "POST"])
 def index():
+    global participants, message
+
     if request.method == 'POST':
-        participant_name = request.form['participantName']
-        # Recuperate the name of the participant from the form
 
-        # Add the name of the participant to the list
-        participants.append(participant_name)
+        data = request.get_json()
 
-    return render_template('index.html', participants=participants)
+        if "participants" in data and "message" in data:
+            participants = data["participants"]
+            message = data["message"]
+
+    return render_template("index.html")
 
 # Run the app in local
-if __name__ == '__main__':
+if __name__ == "__main__":
     app.run(debug=True)

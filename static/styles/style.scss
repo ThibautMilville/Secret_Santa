@@ -79,7 +79,7 @@ body {
             div.participant {
               width: 100%;
               display: grid;
-              grid-template-columns: 1fr 2fr 1fr;
+              grid-template-columns: 1fr 3fr 0.4fr;
               align-items: center;
               justify-content: center;
               margin: 0 0 0.5rem 0;
@@ -97,7 +97,7 @@ body {
               }
 
               button {
-                width: 40%;
+                width: 80%;
                 display: flex;
                 align-items: center;
                 justify-content: center;

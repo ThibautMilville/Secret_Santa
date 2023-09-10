@@ -4,16 +4,20 @@ export default class formLogic {
     this.form = document.getElementById("multistep-form");
     this.slides = document.querySelectorAll("div.slide");
     this.participantsList = document.getElementsByClassName('participants-list')[0];
+    this.textarea = document.getElementById('message');
 
+    // Buttons
     this.nextButtons = document.querySelectorAll('.next-button');
     this.prevButtons = document.querySelectorAll('.prev-button');
     this.addAParticipantButton = document.getElementsByClassName('add-a-participant')[0];
+    this.submitButton = document.getElementById('submit-button');
 
     // Properties
     this.currentStep = 1;
 
     // Arrays
     this.participants = [];
+    this.message = '';
 
     this.load();
   }
@@ -24,7 +28,10 @@ export default class formLogic {
   }
 
   nextStep() {
-    if ((this.currentStep < this.slides.length) && !this.checkEmptyFields()) {
+    if (this.checkEmptyFields()) {
+      alert('Please fill all the fields!');
+    }
+    else if (this.currentStep < this.slides.length) {
       this.slides[this.currentStep - 1].classList.remove("active");
       this.currentStep++;
       this.slides[this.currentStep - 1].classList.add("active");
@@ -119,6 +126,33 @@ export default class formLogic {
     }
   }
 
+  getTextareaValue() {
+    // Get the value of the textarea
+    this.message = this.textarea.value;
+  }
+
+  sendData() {
+    // Send data to the server
+    let data = {
+      participants: this.participants,
+      message: this.message
+    };
+
+    fetch('/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    }).then(response => {
+      if (response.status === 200) {
+        alert('Your form has been submitted!');
+      } else {
+        alert('Something went wrong, please try again!');
+      }
+    })
+  }
+
   // Bindings
   bindEvents() {
     // Next button
@@ -151,6 +185,12 @@ export default class formLogic {
       e.preventDefault();
       this.addAParticipant();
       this.removeAParticipant();
+    }.bind(this));
+    // Submit button
+    this.submitButton.addEventListener('click', function (e) {
+      e.preventDefault();
+      this.getTextareaValue();
+      this.sendData();
     }.bind(this));
   }
 }

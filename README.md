@@ -2,4 +2,4 @@
 
 Secret santa in HTML, SCSS, JavaScript and Python.
 
-Launch the app here : https://secret-santa-weld.vercel.app/
+Launch the app here : https://secret-santa-thibaut-milville.vercel.app/

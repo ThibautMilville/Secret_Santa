@@ -21,7 +21,7 @@ body {
   color: var(--black);
 }
 body main {
-  min-width: 20%;
+  width: 22%;
 }
 body main section {
   width: 100%;
@@ -70,9 +70,14 @@ body main section form div.slide button {
   border: 1px solid #ccc;
   border-radius: 0.5rem;
   font-size: 1rem;
+  font-weight: 600;
   background-color: var(--black);
   color: var(--white);
   cursor: pointer;
+}
+body main section form div.slide button i {
+  font-size: 0.9rem;
+  margin-left: 0.3rem;
 }
 body main section form div.slide div.progress-indicator {
   width: 100px;
@@ -88,6 +93,7 @@ body main section form div.slide div.progress-indicator span {
   background-color: var(--black);
   border: 1px solid var(--black);
   border-radius: 0.5rem;
+  cursor: pointer;
 }
 body main section form div.slide div.progress-indicator span.active {
   background-color: var(--white);

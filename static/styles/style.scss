@@ -23,7 +23,7 @@ body {
   color: var(--black);
 
   main {
-    min-width: 20%;
+    width: 22%;
 
     section {
       width: 100%;
@@ -76,9 +76,15 @@ body {
             border: 1px solid #ccc;
             border-radius: 0.5rem;
             font-size: 1rem;
+            font-weight: 600;
             background-color: var(--black);
             color: var(--white);
             cursor: pointer;
+
+            i {
+              font-size: 0.9rem;
+              margin-left: 0.3rem;
+            }
           }
 
           div.progress-indicator {
@@ -95,6 +101,7 @@ body {
               background-color: var(--black);
               border: 1px solid var(--black);
               border-radius: 0.5rem;
+              cursor: pointer;
 
               &.active {
                 background-color: var(--white);

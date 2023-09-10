@@ -21,7 +21,7 @@ export default class formLogic {
     if (this.currentStep < this.slides.length) {
       this.slides[this.currentStep - 1].style.display = "none";
       this.currentStep++;
-      this.slides[this.currentStep - 1].style.display = "block";
+      this.slides[this.currentStep - 1].style.display = "flex";
     }
   }
 
@@ -29,7 +29,7 @@ export default class formLogic {
     if (this.currentStep > 1) {
       this.slides[this.currentStep - 1].style.display = "none";
       this.currentStep--;
-      this.slides[this.currentStep - 1].style.display = "block";
+      this.slides[this.currentStep - 1].style.display = "flex";
     }
   }
 

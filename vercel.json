@@ -4,7 +4,6 @@
         {
             "src": "app.py",
             "use": "@vercel/python",
-            "config": { "maxLambdaSize": "50mb", "functions": {"api/**/*.py": { "runtime": "python3.9" }}}
         }
     ],
     "routes": [

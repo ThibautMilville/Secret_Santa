@@ -63,7 +63,7 @@ export default class formLogic {
       <span class="participant-name">${participantName}</span>
       <span class="participant-email">${participantEmail}</span>
       <button class="remove-participant"><i class="fa-solid fa-trash"></i></button>
-    `;
+      `;
       this.participantsList.appendChild(newParticipant);
       this.participantsList.style.display = 'flex';
 

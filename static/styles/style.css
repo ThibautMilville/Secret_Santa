@@ -66,13 +66,31 @@ body main section form div.slide input {
 body main section form div.slide button {
   width: 100%;
   padding: 0.8rem;
-  margin-top: 1rem;
+  margin: 1rem 0 1.5rem 0;
   border: 1px solid #ccc;
   border-radius: 0.5rem;
   font-size: 1rem;
   background-color: var(--black);
   color: var(--white);
   cursor: pointer;
+}
+body main section form div.slide div.progress-indicator {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: auto;
+}
+body main section form div.slide div.progress-indicator span {
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  background-color: var(--black);
+  border: 1px solid var(--black);
+  border-radius: 0.5rem;
+}
+body main section form div.slide div.progress-indicator span.active {
+  background-color: var(--white);
 }
 body main section form div.slide#step2, body main section form div.slide#step3 {
   display: none;

@@ -74,7 +74,7 @@ def send_email(giver, receiver, user_message):
         
         message = Mail(
             from_email='tmilville.pro@gmail.com',
-            to_emails="tmilville.pro@gmail.com"
+            to_emails="tmilville.pro@gmail.com",
             subject=subject,
             plain_text_content=content
         )

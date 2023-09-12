@@ -1,8 +1,8 @@
+import os
 from flask import Flask, render_template, request
 import random
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 app = Flask(__name__)
 
@@ -20,14 +20,10 @@ def index():
 
         if "participants" in data and "message" in data:
             participants = data["participants"]
-            message = data["message"]
+            user_message = data["message"]
             assignments = secret_santa(participants)
 
-            # Send emails to all participants
-            for assignment in assignments:
-                giver = assignment["giver"]
-                receiver = assignment["receiver"]
-                send_email(giver, receiver, message)
+            send_emails(assignments, user_message)
             
     return render_template("index.html")
 
@@ -51,34 +47,48 @@ def secret_santa(participants):
     
     return assignments
 
-def send_email(giver, receiver, message):
-    # Configuration for the SMTP server
-    smtp_server = 'smtp.example.com'
-    smtp_port = 587
-    smtp_username = 'votre_adresse_email@example.com'
-    smtp_password = 'votre_mot_de_passe'
+def send_emails(assignments, user_message):
+    for assignment in assignments:
+        giver = assignment["giver"]
+        receiver = assignment["receiver"]
+        send_email(giver, receiver, user_message)
 
-    # Creation of the message
-    msg = MIMEMultipart()
-    msg['From'] = smtp_username
-    msg['To'] = giver  # Receiver's email address
-    msg['Subject'] = 'Père Noël Secret'
-
-    # Body of the message
-    body = f'Bonjour {giver},\n\nVous devez offrir un cadeau à {receiver}.\n\n{message}'
-    msg.attach(MIMEText(body, 'plain'))
-
-    # Connection to the SMTP server and sending of the message
+def send_email(giver, receiver, user_message):
     try:
-        server = smtplib.SMTP(smtp_server, smtp_port)
-        server.starttls()
-        server.login(smtp_username, smtp_password)
-        text = msg.as_string()
-        server.sendmail(smtp_username, giver, text)
-        server.quit()
-        print(f"E-mail envoyé à {giver} avec le nom de {receiver}")
+        giver_name = giver['name']
+        giver_email = giver['email']
+        receiver_name = receiver['name']
+
+        api_key = os.environ.get('SENDGRID_API_KEY')
+
+        if api_key:
+            # Initialize the SendGrid client
+            sg = SendGridAPIClient(api_key)
+            print("API key found", api_key)
+        else:
+            print("No API key found", api_key)
+            return
+
+        subject = f"Secret Santa - Your receiver is {receiver_name}"
+        content = f"Hello {giver_name},\n\nYour receiver is {receiver_name}.\n\n{user_message}\n\nMerry Christmas !"
+        
+        message = Mail(
+            from_email='tmilville.pro@gmail.com',
+            to_emails=giver_email,
+            subject=subject,
+            plain_text_content=content
+        )
+        
+        response = sg.send(message)
+
+        if response.status_code == 202:
+            print(f"Email sent to {receiver_name}!")
+        else:
+            print(f"Failed to send email. Status code: {response.status_code}")
+            print(response.body)
     except Exception as e:
-        print(f"Erreur lors de l'envoi de l'e-mail à {giver}: {str(e)}")
+        print(f"Error while sending email to receiver {receiver_name}: {e}")
+        print()
 
 # Run the app in local
 if __name__ == "__main__":

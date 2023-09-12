@@ -28,7 +28,7 @@ export default class formLogic {
   }
 
   nextStep() {
-    if (this.checkEmptyFields()) {
+    if (this.checkEmptyFieldsRequired()) {
       alert('Please fill all the fields!');
     }
     else if (this.currentStep < this.slides.length) {
@@ -104,6 +104,20 @@ export default class formLogic {
   }
 
   checkEmptyFields() {
+    // Check if there are empty fields in the current slide
+    let emptyFields = false;
+    let inputs = this.slides[this.currentStep - 1].querySelectorAll('input');
+
+    inputs.forEach(input => {
+      if (input.value === '') {
+        emptyFields = true;
+      }
+    });
+
+    return emptyFields;
+  }
+
+  checkEmptyFieldsRequired() {
     // Check if there are empty required fields in the current slide
     let emptyFields = false;
     let inputs = this.slides[this.currentStep - 1].querySelectorAll('input[required]');

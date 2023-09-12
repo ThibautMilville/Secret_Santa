@@ -20,6 +20,11 @@ def index():
 
         if "participants" in data and "message" in data:
             participants = data["participants"]
+
+            # Get the main participant (the initiator of the Secret Santa)
+            main_participant_name = participants[0]["name"]
+            main_participant_email = participants[0]["email"]
+
             user_message = data["message"]
             assignments = secret_santa(participants)
 

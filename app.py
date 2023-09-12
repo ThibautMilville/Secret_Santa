@@ -37,15 +37,13 @@ def secret_santa(participants):
     random.shuffle(shuffled_participants)
     
     global assignments
-    possible_receivers = shuffled_participants.copy()
+    for i in range(len(participants)):
+        giver = participants[i]
+        receiver = None
 
-    for giver in shuffled_participants:
-        # Check if the possible receivers list is empty
-        if not possible_receivers:
-            raise ValueError("Impossible to assign a receiver to a giver")
-        
-        possible_receivers.remove(giver)
-        receiver = random.choice(possible_receivers)
+        # Assign a receiver to the giver | Cannot be the same person
+        while receiver is None or receiver == giver:
+            receiver = random.choice(participants)
 
         assignments.append({
             "giver": giver,

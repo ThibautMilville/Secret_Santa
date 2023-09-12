@@ -28,10 +28,7 @@ export default class formLogic {
   }
 
   nextStep() {
-    if (this.checkEmptyFieldsRequired()) {
-      alert('Please fill all the fields!');
-    }
-    else if (this.currentStep < this.slides.length) {
+    if (this.currentStep < this.slides.length) {
       this.slides[this.currentStep - 1].classList.remove("active");
       this.currentStep++;
       this.slides[this.currentStep - 1].classList.add("active");
@@ -50,7 +47,10 @@ export default class formLogic {
     let inputs = this.slides[this.currentStep - 1].querySelectorAll('input');
 
     // Check if there are empty fields
-    if (this.checkEmptyFields()) {
+    if (this.currentStep === 1 && this.checkEmptyFieldsRequired()) {
+      alert('Please fill all the fields!');
+    }
+    else if (this.currentStep != 1 && this.checkEmptyFields()) {
       alert('Please fill all the fields!');
     }
     else {
@@ -63,23 +63,17 @@ export default class formLogic {
         email: participantEmail
       });
 
-      // Add participant to the list
-      let newParticipant = document.createElement('div');
-      newParticipant.classList.add('participant');
-      newParticipant.innerHTML = `
-      <span class="participant-name">${participantName}</span>
-      <span class="participant-email">${participantEmail}</span>
-      <button class="remove-participant"><i class="fa-solid fa-trash"></i></button>
-      `;
-      this.participantsList.appendChild(newParticipant);
-      this.participantsList.style.display = 'flex';
+      // If it is the second slide, show the participants list
+      if (this.currentStep === 2) {
+        this.showParticipants(participantName, participantEmail);
 
-      // Reset inputs
-      inputs[0].value = '';
-      inputs[1].value = '';
+        // Reset inputs
+        inputs[0].value = '';
+        inputs[1].value = '';
 
-      // Remove participant
-      this.removeAParticipant();
+        // Remove participant
+        this.removeAParticipant();
+      }
     }
   }
 
@@ -101,6 +95,19 @@ export default class formLogic {
         }
       }.bind(this));
     });
+  }
+
+  showParticipants(participantName, participantEmail) {
+    // Add participant to the list
+    let newParticipant = document.createElement('div');
+    newParticipant.classList.add('participant');
+    newParticipant.innerHTML = `
+    <span class="participant-name">${participantName}</span>
+    <span class="participant-email">${participantEmail}</span>
+    <button class="remove-participant"><i class="fa-solid fa-trash"></i></button>
+    `;
+    this.participantsList.appendChild(newParticipant);
+    this.participantsList.style.display = 'flex';
   }
 
   checkEmptyFields() {
@@ -175,6 +182,9 @@ export default class formLogic {
         e.preventDefault();
         switch (this.slides[this.currentStep - 1]) {
           case this.slides[0] || this.slides[2]:
+            if (this.slides[this.currentStep - 1] === this.slides[0]) {
+              this.addAParticipant();
+            }
             this.nextStep();
             break;
           case this.slides[1]:

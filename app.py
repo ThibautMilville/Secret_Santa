@@ -82,7 +82,7 @@ def send_email(giver, receiver, user_message):
             return
 
         subject = f"Secret Santa - Your receiver is {receiver_name}"
-        content = f"Hello {giver_name},\n\nYour receiver is {receiver_name}.\n\nMessage by the creator of this secret santa ({main_participant_name}): {user_message}\n\nMerry Christmas !"
+        content = f'Hello {giver_name},\n\nYou participate to the Secret Santa organised by {main_participant_name}. Your receiver is {receiver_name}!\n\n{main_participant_name} has a message for you! Here it is:\n"{user_message}"\n\nMerry Christmas!'
         
         message = Mail(
             from_email='tmilville.pro@gmail.com',

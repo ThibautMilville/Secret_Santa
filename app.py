@@ -21,10 +21,6 @@ def index():
         if "participants" in data and "message" in data:
             participants = data["participants"]
 
-            # Get the main participant (the initiator of the Secret Santa)
-            main_participant_name = participants[0]["name"]
-            main_participant_email = participants[0]["email"]
-
             user_message = data["message"]
             assignments = secret_santa(participants)
 
@@ -33,24 +29,32 @@ def index():
     return render_template("index.html")
 
 def secret_santa(participants):
-    shuffled_participants = participants.copy()
-    random.shuffle(shuffled_participants)
-    
-    global assignments
-    for i in range(len(participants)):
-        giver = participants[i]
-        receiver = None
+    # Check if every giver has a different receiver
+    while True:
+        assignments = assign_gifts(participants)
+        valid = all(giver != receiver for giver, receiver in assignments)
+        if valid:
+            return assignments
 
-        # Assign a receiver to the giver | Cannot be the same person
-        while receiver is None or receiver == giver:
-            receiver = random.choice(participants)
+def assign_gifts(participants):
+    giver_list = participants.copy()
+    receiver_list = participants.copy()
+    assignment_list = []
 
-        assignments.append({
-            "giver": giver,
-            "receiver": receiver
-        })
+    for giver in giver_list:
+        while True:
+            # Choose a random receiver and check if it is not the same as the giver
+            receiver = random.choice(receiver_list)
+            if giver != receiver:
+                break
+            elif len(receiver_list) == 1:
+                # If there is only one participant left and it is the same as the giver, we start again
+                receiver_list = participants.copy()
+        # Add the gift assignment to the list
+        assignment_list.append({"giver": giver, "receiver": receiver})
+        receiver_list.remove(receiver)
     
-    return assignments
+    return assignment_list
 
 def send_emails(assignments, user_message):
     for assignment in assignments:
@@ -60,6 +64,9 @@ def send_emails(assignments, user_message):
 
 def send_email(giver, receiver, user_message):
     try:
+        # Get the main participant (the initiator of the Secret Santa)
+        main_participant_name = participants[0]["name"]
+
         giver_name = giver['name']
         giver_email = giver['email']
         receiver_name = receiver['name']
@@ -75,11 +82,11 @@ def send_email(giver, receiver, user_message):
             return
 
         subject = f"Secret Santa - Your receiver is {receiver_name}"
-        content = f"Hello {giver_name},\n\nYour receiver is {receiver_name}.\n\n{user_message}\n\nMerry Christmas !"
+        content = f"Hello {giver_name},\n\nYour receiver is {receiver_name}.\n\nMessage by the creator of this secret santa ({main_participant_name}): {user_message}\n\nMerry Christmas !"
         
         message = Mail(
             from_email='tmilville.pro@gmail.com',
-            to_emails="tmilville.pro@gmail.com",
+            to_emails=giver_email,
             subject=subject,
             plain_text_content=content
         )

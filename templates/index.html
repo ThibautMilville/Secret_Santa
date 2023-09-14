@@ -15,6 +15,7 @@
     <section>
       <h1>Secret santa</h1>
       <form method="post" id="multistep-form">
+        <!-- Step 1 -->
         <div class="slide active" id="step1">
           <h2>Information</h2>
           <label for="name">Name</label>
@@ -27,8 +28,10 @@
             <span class="active"></span>
             <span></span>
             <span></span>
+            <span></span>
           </div>
         </div>
+        <!-- Step 2 -->
         <div class="slide" id="step2">
           <h2>Participants</h2>
           <!-- Participants list (hidden) -->
@@ -43,20 +46,51 @@
             <button type="button" class="prev-button"><i class="fa-solid fa-arrow-left"></i>Previous</button>
             <button type="button" class="next-button">Next<i class="fa-solid fa-arrow-right"></i></button>
           </div>
+
           <!-- Progress bar -->
           <div class="progress-indicator">
             <span></span>
             <span class="active"></span>
             <span></span>
+            <span></span>
           </div>
         </div>
+        <!-- Step 3 -->
         <div class="slide" id="step3">
+          <h2>Blacklist</h2>
+          <!-- Blacklist list (hidden) -->
+          <div class="blacklist-list">
+          </div>
+          <p class="blacklist-choice">
+            <select id="giverSelect">
+            </select>
+            cannot offer a gift to
+            <select id="receiverSelect">
+            </select>
+          </p>
+          <button type="button" class="add-a-blacklist">Add</button>
+          <div class="progress-buttons">
+            <button type="button" class="prev-button"><i class="fa-solid fa-arrow-left"></i>Previous</button>
+            <button type="button" class="next-button">Next<i class="fa-solid fa-arrow-right"></i></button>
+          </div>
+
+          <!-- Progress bar -->
+          <div class="progress-indicator">
+            <span></span>
+            <span></span>
+            <span class="active"></span>
+            <span></span>
+          </div>
+        </div>
+        <!-- Step 4 -->
+        <div class="slide" id="step4">
           <label for="message">Message</label>
           <textarea name="message" id="message" rows="3" placeholder="Your message"></textarea>
           <button type="button" class="prev-button last-one"><i class="fa-solid fa-arrow-left"></i>Previous</button>
           <button type="submit" id="submit-button">Send</button>
           <!-- Progress bar -->
           <div class="progress-indicator">
+            <span></span>
             <span></span>
             <span></span>
             <span class="active"></span>

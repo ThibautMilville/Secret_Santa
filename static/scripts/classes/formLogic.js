@@ -10,6 +10,7 @@ export default class formLogic {
     this.nextButtons = document.querySelectorAll('.next-button');
     this.prevButtons = document.querySelectorAll('.prev-button');
     this.addAParticipantButton = document.getElementsByClassName('add-a-participant')[0];
+    this.addABlacklistButton = document.getElementsByClassName('add-a-blacklist')[0];
     this.submitButton = document.getElementById('submit-button');
 
     // Properties
@@ -17,6 +18,7 @@ export default class formLogic {
 
     // Arrays
     this.participants = [];
+    this.blacklist = [];
     this.message = '';
 
     this.load();
@@ -110,10 +112,55 @@ export default class formLogic {
     this.participantsList.style.display = 'flex';
   }
 
+  initBlacklist() {
+    // Get the select elements
+    let selects = this.slides[2].querySelectorAll('select');
+
+    // Add participants to the select elements
+    this.participants.forEach(participant => {
+      let option = document.createElement('option');
+      option.value = participant.name;
+      option.innerHTML = participant.name;
+      selects[0].appendChild(option);
+      selects[1].appendChild(option.cloneNode(true));
+    });
+  }
+
+  addABlacklist() {
+    let selects = this.slides[this.currentStep - 1].querySelectorAll('select');
+
+    // Check if there are empty fields
+    if (this.checkEmptyFields()) {
+      alert('Please fill all the fields!');
+    }
+    else {
+      let blacklistGiver = selects[0].value;
+      let blacklistReceiver = selects[1].value;
+
+      // Update blacklist array
+      this.blacklist.push({
+        giver: blacklistGiver,
+        receiver: blacklistReceiver
+      });
+
+      // If it is the second slide, show the blacklist list
+      if (this.currentStep === 2) {
+        // this.showBlacklist(blacklistGiver, blacklistReceiver);
+
+        // Reset inputs
+        selects[0].value = '';
+        selects[1].value = '';
+
+        // Remove blacklist
+        // this.removeABlacklist();
+      }
+    }
+  }
+
   checkEmptyFields() {
     // Check if there are empty fields in the current slide
     let emptyFields = false;
-    let inputs = this.slides[this.currentStep - 1].querySelectorAll('input');
+    let inputs = this.slides[this.currentStep - 1].querySelectorAll('input', 'select');
 
     inputs.forEach(input => {
       if (input.value === '') {
@@ -180,20 +227,23 @@ export default class formLogic {
     this.nextButtons.forEach(nextButton => {
       nextButton.addEventListener('click', function (e) {
         e.preventDefault();
-        switch (this.slides[this.currentStep - 1]) {
-          case this.slides[0] || this.slides[2]:
+        if (this.slides[this.currentStep - 1]) {
+          if (this.slides[0] || this.slides[2]) {
+            // If it is the first slide, add the participant
             if (this.slides[this.currentStep - 1] === this.slides[0]) {
               this.addAParticipant();
             }
             this.nextStep();
-            break;
-          case this.slides[1]:
+          }
+          else if (this.slides[1]) {
+            // If it is the second slide, check if there are at least 2 participants
             if (this.checkNumberOfParticipants()) {
+              this.initBlacklist();
               this.nextStep();
             } else {
               alert('You need at least 2 participants!');
             }
-            break;
+          }
         }
       }.bind(this));
     });
@@ -209,6 +259,12 @@ export default class formLogic {
       e.preventDefault();
       this.addAParticipant();
       this.removeAParticipant();
+    }.bind(this));
+    // Add and remove a blacklist buttons
+    this.addABlacklistButton.addEventListener('click', function (e) {
+      e.preventDefault();
+      this.addABlacklist();
+      // this.removeABlacklist();
     }.bind(this));
     // Submit button
     this.submitButton.addEventListener('click', function (e) {

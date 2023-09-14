@@ -127,6 +127,24 @@ export default class formLogic {
     });
   }
 
+  updateSelects() {
+    // Get the select elements
+    let selects = this.slides[2].querySelectorAll('select');
+
+    // Get the selected values
+    let blacklistGiver = selects[0].value;
+    let blacklistReceiver = selects[1].value;
+
+    // if(blacklistGiver === blacklistReceiver) {
+    //   alert('You cannot blacklist yourself!');
+    //   selects[1].options[0].selected = true;
+
+    if ((blacklistGiver || blacklistReceiver) != 'Select a participant') {
+      // Update the options of the select elements
+      
+    }
+  }
+
   addABlacklist() {
     let selects = this.slides[this.currentStep - 1].querySelectorAll('select');
 
@@ -261,6 +279,13 @@ export default class formLogic {
       this.addAParticipant();
       this.removeAParticipant();
     }.bind(this));
+    // Update the blacklist select elements
+    this.slides[2].querySelectorAll('select').forEach(select => {
+      select.addEventListener('change', function (e) {
+        e.preventDefault();
+        this.updateSelects();
+      }.bind(this));
+    });
     // Add and remove a blacklist buttons
     this.addABlacklistButton.addEventListener('click', function (e) {
       e.preventDefault();

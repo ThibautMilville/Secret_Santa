@@ -53,7 +53,9 @@ body main section form div.slide h2 {
   margin: 0 0 1rem 0;
 }
 body main section form div.slide p.blacklist-choice {
+  text-align: center;
   margin: 1rem 0 2rem 0;
+  line-height: 2rem;
 }
 body main section form div.slide label {
   font-size: 1rem;

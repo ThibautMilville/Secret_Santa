@@ -115,6 +115,7 @@ export default class formLogic {
   initBlacklist() {
     // Get the select elements
     let selects = this.slides[2].querySelectorAll('select');
+    console.log(selects);
 
     // Add participants to the select elements
     this.participants.forEach(participant => {
@@ -186,8 +187,8 @@ export default class formLogic {
   }
 
   checkNumberOfParticipants() {
-    // Check if there are at least 2 participants
-    if (this.participants.length < 2) {
+    // Check if there are at least 2 participants + the organizer
+    if (this.participants.length < 3) {
       return false;
     } else {
       return true;
@@ -228,15 +229,15 @@ export default class formLogic {
       nextButton.addEventListener('click', function (e) {
         e.preventDefault();
         if (this.slides[this.currentStep - 1]) {
-          if (this.slides[0] || this.slides[2]) {
+          if ((this.slides[this.currentStep - 1] === this.slides[0]) || (this.slides[this.currentStep - 1] === this.slides[2])) {
             // If it is the first slide, add the participant
             if (this.slides[this.currentStep - 1] === this.slides[0]) {
               this.addAParticipant();
             }
             this.nextStep();
           }
-          else if (this.slides[1]) {
-            // If it is the second slide, check if there are at least 2 participants
+          else if (this.slides[this.currentStep - 1] === this.slides[1]) {
+            // If it is the second slide, check if there are at least 2 participants and init the blacklist
             if (this.checkNumberOfParticipants()) {
               this.initBlacklist();
               this.nextStep();

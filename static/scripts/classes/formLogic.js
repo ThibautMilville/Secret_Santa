@@ -113,35 +113,52 @@ export default class formLogic {
   }
 
   initBlacklist() {
-    // Get the select elements
-    let selects = this.slides[2].querySelectorAll('select');
-    console.log(selects);
-
-    // Add participants to the select elements
+    const selects = this.slides[2].querySelectorAll('select');
+  
+    // Add the participants to the select
+    function addOptionToSelect(select, participantName) {
+      const option = document.createElement('option');
+      option.value = participantName;
+      option.innerHTML = participantName;
+      select.appendChild(option);
+    }
+  
     this.participants.forEach(participant => {
-      let option = document.createElement('option');
-      option.value = participant.name;
-      option.innerHTML = participant.name;
-      selects[0].appendChild(option);
-      selects[1].appendChild(option.cloneNode(true));
+      const optionSelect1 = selects[0].querySelector(`option[value="${participant.name}"]`);
+      const optionSelect2 = selects[1].querySelector(`option[value="${participant.name}"]`);
+  
+      // Add the participant to the select if it is not already in it
+      if (!optionSelect1) {
+        addOptionToSelect(selects[0], participant.name);
+      }
+  
+      // Add the participant to the select if it is not already in it
+      if (!optionSelect2) {
+        addOptionToSelect(selects[1], participant.name);
+      }
     });
   }
-
-  updateSelects() {
-    // Get the select elements
-    let selects = this.slides[2].querySelectorAll('select');
-
-    // Get the selected values
-    let blacklistGiver = selects[0].value;
-    let blacklistReceiver = selects[1].value;
-
-    // if(blacklistGiver === blacklistReceiver) {
-    //   alert('You cannot blacklist yourself!');
-    //   selects[1].options[0].selected = true;
-
-    if ((blacklistGiver || blacklistReceiver) != 'Select a participant') {
-      // Update the options of the select elements
-      
+  
+  updateSelects(e) {
+    const selects = this.slides[2].querySelectorAll('select');
+    const changedSelect = e.target;
+  
+    if (changedSelect === selects[0] || changedSelect === selects[1]) {
+      this.initBlacklist();
+  
+      if (changedSelect.value !== 'default') {
+        // Remove the default option
+        if(changedSelect.querySelector('option[value="default"]')) {
+          changedSelect.querySelector('option[value="default"]').remove();
+        }
+        // Determine the other select and remove the selected option
+        const otherSelect = changedSelect === selects[0] ? selects[1] : selects[0];
+        const optionToRemove = otherSelect.querySelector(`option[value="${changedSelect.value}"]`);
+  
+        if (optionToRemove) {
+          optionToRemove.remove();
+        }
+      }
     }
   }
 
@@ -283,7 +300,7 @@ export default class formLogic {
     this.slides[2].querySelectorAll('select').forEach(select => {
       select.addEventListener('change', function (e) {
         e.preventDefault();
-        this.updateSelects();
+        this.updateSelects(e);
       }.bind(this));
     });
     // Add and remove a blacklist buttons

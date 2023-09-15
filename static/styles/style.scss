@@ -56,15 +56,6 @@ body {
             margin: 0 0 1rem 0;
           }
 
-          p {
-
-            &.blacklist-choice {
-              text-align: center;
-              margin: 1rem 0 2rem 0;
-              line-height: 2rem;
-            }
-          }
-
           label {
             font-size: 1rem;
             margin: 0 0 0.5rem 0;
@@ -118,6 +109,27 @@ body {
                   font-size: 0.6rem;
                 }
               }
+            }
+          }
+
+          div.blacklist-choice {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-bottom: 1rem;
+
+            select {
+              width: 100%;
+              padding: 0.8rem;
+              border: 1px solid var(--gray);
+              border-radius: 0.5rem;
+              font-size: 1rem;
+              line-height: 0;
+            }
+
+            p {
+              font-size: 1rem;
+              margin: 1rem 0 1rem 0;
             }
           }
 

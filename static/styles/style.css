@@ -64,41 +64,46 @@ body main section form div.slide input {
   margin: 0 0 1rem 0;
   font-size: 1rem;
 }
-body main section form div.slide div.participants-list {
+body main section form div.slide div.participants-list, body main section form div.slide div.blacklist-list {
   display: none;
   flex-direction: column;
   width: 100%;
   margin-bottom: 1rem;
 }
-body main section form div.slide div.participants-list div.participant {
+body main section form div.slide div.participants-list div.participant, body main section form div.slide div.participants-list div.blacklist, body main section form div.slide div.blacklist-list div.participant, body main section form div.slide div.blacklist-list div.blacklist {
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 3fr 0.4fr;
+  grid-template-columns: 1fr 3fr 1fr;
   align-items: center;
   justify-content: center;
   margin: 0 0 0.5rem 0;
 }
-body main section form div.slide div.participants-list div.participant span {
+body main section form div.slide div.participants-list div.participant span, body main section form div.slide div.participants-list div.participant p, body main section form div.slide div.participants-list div.blacklist span, body main section form div.slide div.participants-list div.blacklist p, body main section form div.slide div.blacklist-list div.participant span, body main section form div.slide div.blacklist-list div.participant p, body main section form div.slide div.blacklist-list div.blacklist span, body main section form div.slide div.blacklist-list div.blacklist p {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   font-size: 1rem;
+}
+body main section form div.slide div.participants-list div.participant span:not(p:last-child), body main section form div.slide div.participants-list div.participant p:not(p:last-child), body main section form div.slide div.participants-list div.blacklist span:not(p:last-child), body main section form div.slide div.participants-list div.blacklist p:not(p:last-child), body main section form div.slide div.blacklist-list div.participant span:not(p:last-child), body main section form div.slide div.blacklist-list div.participant p:not(p:last-child), body main section form div.slide div.blacklist-list div.blacklist span:not(p:last-child), body main section form div.slide div.blacklist-list div.blacklist p:not(p:last-child) {
   border-right: 1px solid var(--gray);
 }
-body main section form div.slide div.participants-list div.participant span:nth-child(2) {
-  justify-content: center;
-}
-body main section form div.slide div.participants-list div.participant button {
-  width: 80%;
+body main section form div.slide div.participants-list div.participant button, body main section form div.slide div.participants-list div.blacklist button, body main section form div.slide div.blacklist-list div.participant button, body main section form div.slide div.blacklist-list div.blacklist button {
+  width: 65%;
   display: flex;
   align-items: center;
   justify-content: center;
-  justify-self: flex-end;
+  justify-self: center;
   margin: 0;
   padding: 0.4rem;
 }
-body main section form div.slide div.participants-list div.participant button i {
+body main section form div.slide div.participants-list div.participant button i, body main section form div.slide div.participants-list div.blacklist button i, body main section form div.slide div.blacklist-list div.participant button i, body main section form div.slide div.blacklist-list div.blacklist button i {
   font-size: 0.6rem;
+}
+body main section form div.slide div.participants-list div.participant.blacklist, body main section form div.slide div.participants-list div.blacklist.blacklist, body main section form div.slide div.blacklist-list div.participant.blacklist, body main section form div.slide div.blacklist-list div.blacklist.blacklist {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+body main section form div.slide div.participants-list div.participant.blacklist button, body main section form div.slide div.participants-list div.blacklist.blacklist button, body main section form div.slide div.blacklist-list div.participant.blacklist button, body main section form div.slide div.blacklist-list div.blacklist.blacklist button {
+  width: 35%;
 }
 body main section form div.slide div.blacklist-choice {
   display: flex;

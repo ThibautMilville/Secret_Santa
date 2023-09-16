@@ -4,6 +4,7 @@ export default class formLogic {
     this.form = document.getElementById("multistep-form");
     this.slides = document.querySelectorAll("div.slide");
     this.participantsList = document.getElementsByClassName('participants-list')[0];
+    this.blacklistList = document.getElementsByClassName('blacklist-list')[0];
     this.textarea = document.getElementById('message');
 
     // Buttons
@@ -114,7 +115,7 @@ export default class formLogic {
 
   initBlacklist() {
     const selects = this.slides[2].querySelectorAll('select');
-  
+
     // Add the participants to the select
     function addOptionToSelect(select, participantName) {
       const option = document.createElement('option');
@@ -122,45 +123,68 @@ export default class formLogic {
       option.innerHTML = participantName;
       select.appendChild(option);
     }
-  
+
     this.participants.forEach(participant => {
       const optionSelect1 = selects[0].querySelector(`option[value="${participant.name}"]`);
       const optionSelect2 = selects[1].querySelector(`option[value="${participant.name}"]`);
-  
+
       // Add the participant to the select if it is not already in it
       if (!optionSelect1) {
         addOptionToSelect(selects[0], participant.name);
       }
-  
+
       // Add the participant to the select if it is not already in it
       if (!optionSelect2) {
         addOptionToSelect(selects[1], participant.name);
       }
     });
   }
-  
+
   updateSelects(e) {
     const selects = this.slides[2].querySelectorAll('select');
     const changedSelect = e.target;
-  
+
     if (changedSelect === selects[0] || changedSelect === selects[1]) {
       this.initBlacklist();
-  
+
       if (changedSelect.value !== 'default') {
         // Remove the default option
-        if(changedSelect.querySelector('option[value="default"]')) {
+        if (changedSelect.querySelector('option[value="default"]')) {
           changedSelect.querySelector('option[value="default"]').remove();
         }
         // Determine the other select and remove the selected option
         const otherSelect = changedSelect === selects[0] ? selects[1] : selects[0];
         const optionToRemove = otherSelect.querySelector(`option[value="${changedSelect.value}"]`);
-  
+
         if (optionToRemove) {
           optionToRemove.remove();
         }
       }
     }
   }
+
+  resetSelects() {
+    // Reset the selects value to default and add the participants to the select
+    const selects = this.slides[2].querySelectorAll('select');
+    selects.forEach(select => {
+      // Remove all existing options
+      select.innerHTML = '';
+  
+      // Create the default option
+      const defaultOption = document.createElement('option');
+      defaultOption.value = 'default';
+      defaultOption.innerHTML = 'Select a participant';
+  
+      // Set the "selected" attribute on the default option
+      defaultOption.setAttribute('selected', 'selected');
+  
+      // Add the default option to the select
+      select.appendChild(defaultOption);
+  
+      // Call the function to initialize the participants list
+      this.initBlacklist();
+    });
+  }  
 
   addABlacklist() {
     let selects = this.slides[this.currentStep - 1].querySelectorAll('select');
@@ -180,17 +204,27 @@ export default class formLogic {
       });
 
       // If it is the second slide, show the blacklist list
-      if (this.currentStep === 2) {
-        // this.showBlacklist(blacklistGiver, blacklistReceiver);
-
-        // Reset inputs
-        selects[0].value = '';
-        selects[1].value = '';
+      if (this.currentStep === 3) {
+        this.showBlacklist(blacklistGiver, blacklistReceiver);
+        this.resetSelects();
 
         // Remove blacklist
         // this.removeABlacklist();
       }
     }
+  }
+
+  showBlacklist(blacklistGiver, blacklistReceiver) {
+    // Add blacklist to the list
+    let newBlacklist = document.createElement('div');
+    newBlacklist.classList.add('blacklist');
+    newBlacklist.innerHTML = `
+    <span class="blacklist-giver">${blacklistGiver}</span>
+    <span class="blacklist-receiver">${blacklistReceiver}</span>
+    <button class="remove-blacklist" title="Delete the blacklist"><i class="fa-solid fa-trash"></i></button>
+    `;
+    this.blacklistList.appendChild(newBlacklist);
+    this.blacklistList.style.display = 'flex';
   }
 
   checkEmptyFields() {

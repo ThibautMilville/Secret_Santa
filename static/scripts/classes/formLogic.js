@@ -22,14 +22,11 @@ export default class formLogic {
     this.blacklist = [];
     this.message = '';
 
-    this.load();
-  }
-
-  // Methods
-  load() {
+    // Load the methods
     this.bindEvents();
   }
 
+  // Next button
   nextStep() {
     if (this.currentStep < this.slides.length) {
       this.slides[this.currentStep - 1].classList.remove("active");
@@ -38,6 +35,7 @@ export default class formLogic {
     }
   }
 
+  // Previous button
   prevStep() {
     if (this.currentStep > 1) {
       this.slides[this.currentStep - 1].classList.remove("active");
@@ -46,6 +44,7 @@ export default class formLogic {
     }
   }
 
+  // Add a participant to the participants list
   addAParticipant() {
     let inputs = this.slides[this.currentStep - 1].querySelectorAll('input');
 
@@ -80,6 +79,7 @@ export default class formLogic {
     }
   }
 
+  // Remove a participant from the participants list
   removeAParticipant() {
     let removeButtons = document.querySelectorAll('.remove-participant');
     removeButtons.forEach(removeButton => {
@@ -100,6 +100,7 @@ export default class formLogic {
     });
   }
 
+  // Show the participants list
   showParticipants(participantName, participantEmail) {
     // Add participant to the list
     let newParticipant = document.createElement('div');
@@ -113,6 +114,7 @@ export default class formLogic {
     this.participantsList.style.display = 'flex';
   }
 
+  // Initialize the blacklist select elements
   initBlacklist() {
     const selects = this.slides[2].querySelectorAll('select');
 
@@ -140,6 +142,7 @@ export default class formLogic {
     });
   }
 
+  // Update the blacklist select elements
   updateSelects(e) {
     const selects = this.slides[2].querySelectorAll('select');
     const changedSelect = e.target;
@@ -163,6 +166,7 @@ export default class formLogic {
     }
   }
 
+  // Reset the selects value to default and add the participants to the select list
   resetSelects() {
     // Reset the selects value to default and add the participants to the select
     const selects = this.slides[2].querySelectorAll('select');
@@ -186,6 +190,7 @@ export default class formLogic {
     });
   }  
 
+  // Add a blacklist to the blacklist list
   addABlacklist() {
     let selects = this.slides[this.currentStep - 1].querySelectorAll('select');
 
@@ -215,6 +220,7 @@ export default class formLogic {
     }
   }
 
+  // Remove a blacklist from the blacklist list
   removeABlacklist() {
     // For each remove button, add an event listener
     let removeButtons = document.querySelectorAll('.remove-blacklist');
@@ -239,6 +245,7 @@ export default class formLogic {
     });
   }
 
+  // Show the blacklist list
   showBlacklist(blacklistGiver, blacklistReceiver) {
     // Add blacklist to the list
     let newBlacklist = document.createElement('div');
@@ -252,6 +259,7 @@ export default class formLogic {
     this.blacklistList.style.display = 'flex';
   }
 
+  // Check if there are empty fields in the current slide
   checkEmptyFields() {
     // Check if there are empty fields in the current slide
     let emptyFields = false;
@@ -266,6 +274,7 @@ export default class formLogic {
     return emptyFields;
   }
 
+  // Check if there are empty required fields in the current slide
   checkEmptyFieldsRequired() {
     // Check if there are empty required fields in the current slide
     let emptyFields = false;
@@ -280,8 +289,8 @@ export default class formLogic {
     return emptyFields;
   }
 
+  // Check if there are at least 2 participants + the organizer
   checkNumberOfParticipants() {
-    // Check if there are at least 2 participants + the organizer
     if (this.participants.length < 3) {
       return false;
     } else {
@@ -289,13 +298,14 @@ export default class formLogic {
     }
   }
 
+  // Get the value of the textarea
   getTextareaValue() {
     // Get the value of the textarea
     this.message = this.textarea.value;
   }
 
+  // Send data to the server
   sendData() {
-    // Send data to the server
     let data = {
       participants: this.participants,
       blacklist: this.blacklist,

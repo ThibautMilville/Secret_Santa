@@ -56,6 +56,7 @@ def assign_gifts(participants):
     
     return assignment_list
 
+# Send an email to every giver
 def send_emails(assignments, user_message):
     for assignment in assignments:
         giver = assignment["giver"]

@@ -207,11 +207,36 @@ export default class formLogic {
       if (this.currentStep === 3) {
         this.showBlacklist(blacklistGiver, blacklistReceiver);
         this.resetSelects();
+        console.log(this.blacklist);
 
         // Remove blacklist
-        // this.removeABlacklist();
+        this.removeABlacklist();
       }
     }
+  }
+
+  removeABlacklist() {
+    // For each remove button, add an event listener
+    let removeButtons = document.querySelectorAll('.remove-blacklist');
+    removeButtons.forEach(removeButton => {
+      removeButton.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        // Update array by finding the index of the blacklist to remove
+        let blacklistGiver = removeButton.parentNode.querySelector('.blacklist-giver').innerHTML;
+        let blacklistReceiver = removeButton.parentNode.querySelector('.blacklist-receiver').innerHTML;
+        let blacklistIndex = this.blacklist.findIndex(blacklist => blacklist.giver === blacklistGiver && blacklist.receiver === blacklistReceiver);
+        this.blacklist.splice(blacklistIndex, 1);
+
+        // Remove the blacklist from the displayed list
+        this.blacklistList.removeChild(removeButton.parentNode);
+
+        // Hide the blacklist list if it is empty
+        if (this.blacklistList.children.length === 0) {
+          this.blacklistList.style.display = 'none';
+        }
+      }.bind(this));
+    });
   }
 
   showBlacklist(blacklistGiver, blacklistReceiver) {
@@ -273,6 +298,7 @@ export default class formLogic {
     // Send data to the server
     let data = {
       participants: this.participants,
+      blacklist: this.blacklist,
       message: this.message
     };
 

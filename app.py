@@ -13,8 +13,10 @@ assignments = []
 # Route to the index page
 @app.route("/", methods=["GET", "POST"])
 def index():
+    # We create global variables to be able to use them in the other functions
     global participants, message, assignments
 
+    # If the request is a POST request, we get the data from the form
     if request.method == 'POST':
         data = request.get_json()
 
@@ -23,9 +25,12 @@ def index():
 
             user_message = data["message"]
             assignments = secret_santa(participants)
+            # Display the assignments
+            print("Assignments:")
 
             send_emails(assignments, user_message)
             
+    # Display the index page
     return render_template("index.html")
 
 def secret_santa(participants):

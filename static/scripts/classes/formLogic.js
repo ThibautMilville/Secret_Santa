@@ -212,7 +212,6 @@ export default class formLogic {
       if (this.currentStep === 3) {
         this.showBlacklist(blacklistGiver, blacklistReceiver);
         this.resetSelects();
-        console.log(this.blacklist);
 
         // Remove blacklist
         this.removeABlacklist();

@@ -76,6 +76,7 @@ def assign_gifts(participants, blacklists):
                 # If there is only one participant left and it is the same as the giver, we start again
                 receiver_list = participants.copy()
         # Add the gift assignment to the list
+        print(f"{giver['name']} -> {receiver['name']}")
         assignment_list.append({"giver": giver, "receiver": receiver})
         receiver_list.remove(receiver)
     

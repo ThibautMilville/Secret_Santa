@@ -3,7 +3,6 @@ export default class formLogic {
     // Elements
     this.form = document.getElementById("multistep-form");
     this.slides = document.querySelectorAll("div.slide");
-    this.participantsList = document.getElementsByClassName('participants-list')[0];
     this.blacklistList = document.getElementsByClassName('blacklist-list')[0];
     this.textarea = document.getElementById('message');
 
@@ -72,16 +71,17 @@ export default class formLogic {
         // Reset inputs
         inputs[0].value = '';
         inputs[1].value = '';
-
-        // Remove participant
-        this.removeAParticipant();
       }
     }
   }
 
   // Remove a participant from the participants list
   removeAParticipant() {
+    // Define the participants list and the remove buttons
+    let participantsList = document.getElementsByClassName('participants-list')[0];
     let removeButtons = document.querySelectorAll('.remove-participant');
+
+    // For each remove button, add an event listener
     removeButtons.forEach(removeButton => {
       removeButton.addEventListener('click', function (e) {
         e.preventDefault();
@@ -92,9 +92,14 @@ export default class formLogic {
         let participantIndex = this.participants.findIndex(participant => participant.name === participantName && participant.email === participantEmail);
         this.participants.splice(participantIndex, 1);
 
-        this.participantsList.removeChild(removeButton.parentNode);
-        if (this.participantsList.children.length === 0) {
-          this.participantsList.style.display = 'none';
+        // Remove the participant from the displayed list
+        console.log(participantsList)
+        console.log(removeButton.parentNode);
+        participantsList.removeChild(removeButton.parentNode);
+
+        // Hide the participants list if it is empty
+        if (participantsList.children.length === 1) {
+          participantsList.style.display = 'none';
         }
       }.bind(this));
     });
@@ -102,6 +107,9 @@ export default class formLogic {
 
   // Show the participants list
   showParticipants(participantName, participantEmail) {
+    // Define the participants list
+    let participantsList = document.getElementsByClassName('participants-list')[0];
+
     // Add participant to the list
     let newParticipant = document.createElement('div');
     newParticipant.classList.add('participant');
@@ -110,8 +118,8 @@ export default class formLogic {
     <span class="participant-email">${participantEmail}</span>
     <button class="remove-participant" title="Delete the participant"><i class="fa-solid fa-trash"></i></button>
     `;
-    this.participantsList.appendChild(newParticipant);
-    this.participantsList.style.display = 'flex';
+    participantsList.appendChild(newParticipant);
+    participantsList.style.display = 'flex';
   }
 
   // Initialize the blacklist select elements

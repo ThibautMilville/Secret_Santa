@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request
+from flask import Flask, request, jsonify, render_template
 import random
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
@@ -7,6 +7,7 @@ from sendgrid.helpers.mail import Mail
 app = Flask(__name__)
 
 participants = []
+blacklist = []
 message = ""
 assignments = []
 
@@ -20,28 +21,36 @@ def index():
     if request.method == 'POST':
         data = request.get_json()
 
-        if "participants" in data and "message" in data:
+        if "participants" in data and "blacklist" in data and "message" in data:
+            # Get the data from the form
             participants = data["participants"]
-
+            blacklists = data["blacklist"]
             user_message = data["message"]
-            assignments = secret_santa(participants)
-            # Display the assignments
-            print("Assignments:")
 
-            send_emails(assignments, user_message)
-            
-    # Display the index page
-    return render_template("index.html")
+            # Assign a receiver to every giver
+            assignments = secret_santa(participants, blacklists)
 
-def secret_santa(participants):
+            if(send_emails(assignments, user_message)):
+                return jsonify({"response": "Emails sent successfully"})
+            else:
+                return jsonify({"response": "Failed to send emails"})
+        else:
+            return jsonify({"response": "Invalid data"})
+        
+    # If the request is a GET request, we return the index page
+    else:
+        return render_template("index.html")
+
+def secret_santa(participants, blacklists):
     # Check if every giver has a different receiver
     while True:
-        assignments = assign_gifts(participants)
+        assignments = assign_gifts(participants, blacklists)
         valid = all(giver != receiver for giver, receiver in assignments)
         if valid:
             return assignments
 
-def assign_gifts(participants):
+# Assign a receiver to every giver
+def assign_gifts(participants, blacklists):
     giver_list = participants.copy()
     receiver_list = participants.copy()
     assignment_list = []
@@ -50,8 +59,19 @@ def assign_gifts(participants):
         while True:
             # Choose a random receiver and check if it is not the same as the giver
             receiver = random.choice(receiver_list)
-            if giver != receiver:
+
+            # Check if the giver is not in the blacklist of the receiver
+            is_valid = True
+
+            for blacklist in blacklists:
+                if blacklist["receiver"] == receiver["name"]:
+                    if giver["name"] in blacklist["giver"]:
+                        is_valid = False
+                        break
+
+            if is_valid:
                 break
+
             elif len(receiver_list) == 1:
                 # If there is only one participant left and it is the same as the giver, we start again
                 receiver_list = participants.copy()
@@ -100,12 +120,12 @@ def send_email(giver, receiver, user_message):
         response = sg.send(message)
 
         if response.status_code == 202:
-            print(f"Email sent to {receiver_name}!")
+            print(f"Email sent to {giver_name} for {receiver_name}")
         else:
             print(f"Failed to send email. Status code: {response.status_code}")
             print(response.body)
     except Exception as e:
-        print(f"Error while sending email to receiver {receiver_name}: {e}")
+        print(f"Error while sending email to receiver {giver_name}: {e}")
         print()
 
 # Run the app in local

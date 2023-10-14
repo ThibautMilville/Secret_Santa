@@ -173,22 +173,22 @@ export default class formLogic {
     selects.forEach(select => {
       // Remove all existing options
       select.innerHTML = '';
-  
+
       // Create the default option
       const defaultOption = document.createElement('option');
       defaultOption.value = 'default';
       defaultOption.innerHTML = 'Select a participant';
-  
+
       // Set the "selected" attribute on the default option
       defaultOption.setAttribute('selected', 'selected');
-  
+
       // Add the default option to the select
       select.appendChild(defaultOption);
-  
+
       // Call the function to initialize the participants list
       this.initBlacklist();
     });
-  }  
+  }
 
   // Add a blacklist to the blacklist list
   addABlacklist() {
@@ -319,11 +319,20 @@ export default class formLogic {
       body: JSON.stringify(data),
     }).then(response => {
       if (response.status === 200) {
-        alert('Your form has been submitted!');
+        return response.json();
       } else {
         alert('Something went wrong, please try again!');
       }
-    })
+    }).then(data => {
+      if (data.response) {
+        if (data.response === "Emails sent successfully") {
+          this.nextStep();
+        }
+        else {
+          alert('Something went wrong, please try again!');
+        }
+      }
+    });
   }
 
   // Bindings

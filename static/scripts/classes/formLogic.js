@@ -3,7 +3,6 @@ export default class formLogic {
     // Elements
     this.form = document.getElementById("multistep-form");
     this.slides = document.querySelectorAll("div.slide");
-    this.blacklistList = document.getElementsByClassName('blacklist-list')[0];
     this.textarea = document.getElementById('message');
 
     // Buttons
@@ -68,6 +67,9 @@ export default class formLogic {
       if (this.currentStep === 2) {
         this.showParticipants(participantName, participantEmail);
 
+        // Initialize the event listener to remove a participant
+        this.removeAParticipant();
+
         // Reset inputs
         inputs[0].value = '';
         inputs[1].value = '';
@@ -77,31 +79,41 @@ export default class formLogic {
 
   // Remove a participant from the participants list
   removeAParticipant() {
-    // Define the participants list and the remove buttons
-    let participantsList = document.getElementsByClassName('participants-list')[0];
+    // Define the remove buttons
     let removeButtons = document.querySelectorAll('.remove-participant');
 
     // For each remove button, add an event listener
     removeButtons.forEach(removeButton => {
-      removeButton.addEventListener('click', function (e) {
+      removeButton.addEventListener('click', (e) => {
         e.preventDefault();
 
-        // Update array by finding the index of the participant to remove
-        let participantName = removeButton.parentNode.querySelector('.participant-name').innerHTML;
-        let participantEmail = removeButton.parentNode.querySelector('.participant-email').innerHTML;
-        let participantIndex = this.participants.findIndex(participant => participant.name === participantName && participant.email === participantEmail);
-        this.participants.splice(participantIndex, 1);
+        // Define the participants list
+        let participantsList = document.getElementsByClassName('participants-list')[0];
 
-        // Remove the participant from the displayed list
-        console.log(participantsList)
-        console.log(removeButton.parentNode);
-        participantsList.removeChild(removeButton.parentNode);
+        // Find the corresponding participant element
+        const participantElement = removeButton.closest('.participant');
+        if (participantElement) {
+          // Extract participant name and email
+          const participantName = participantElement.querySelector('.participant-name').innerHTML;
+          const participantEmail = participantElement.querySelector('.participant-email').innerHTML;
 
-        // Hide the participants list if it is empty
-        if (participantsList.children.length === 1) {
-          participantsList.style.display = 'none';
+          // Find the index of the participant to remove in the participants array
+          const participantIndex = this.participants.findIndex(participant => participant.name === participantName && participant.email === participantEmail);
+
+          if (participantIndex !== -1) {
+            // Remove the participant from the array
+            this.participants.splice(participantIndex, 1);
+
+            // Remove the participant from the displayed list
+            participantElement.parentNode.removeChild(participantElement);
+
+            // Hide the participants list if it is empty
+            if (participantsList.children.length === 1) {
+              participantsList.style.display = 'none';
+            }
+          }
         }
-      }.bind(this));
+      });
     });
   }
 
@@ -221,7 +233,7 @@ export default class formLogic {
         this.showBlacklist(blacklistGiver, blacklistReceiver);
         this.resetSelects();
 
-        // Remove blacklist
+        // Initialize the event listener to remove a blacklist
         this.removeABlacklist();
       }
     }
@@ -229,31 +241,48 @@ export default class formLogic {
 
   // Remove a blacklist from the blacklist list
   removeABlacklist() {
-    // For each remove button, add an event listener
+    // Define the remove buttons
     let removeButtons = document.querySelectorAll('.remove-blacklist');
+
+    // For each remove button, add an event listener
     removeButtons.forEach(removeButton => {
-      removeButton.addEventListener('click', function (e) {
+      removeButton.addEventListener('click', (e) => {
         e.preventDefault();
 
-        // Update array by finding the index of the blacklist to remove
-        let blacklistGiver = removeButton.parentNode.querySelector('.blacklist-giver').innerHTML;
-        let blacklistReceiver = removeButton.parentNode.querySelector('.blacklist-receiver').innerHTML;
-        let blacklistIndex = this.blacklist.findIndex(blacklist => blacklist.giver === blacklistGiver && blacklist.receiver === blacklistReceiver);
-        this.blacklist.splice(blacklistIndex, 1);
+        // Define the blacklist list and the blacklist element
+        const blacklistList = document.getElementsByClassName('blacklist-list')[0];
+        const blacklistElement = removeButton.closest('.blacklist');
 
-        // Remove the blacklist from the displayed list
-        this.blacklistList.removeChild(removeButton.parentNode);
+        if (blacklistElement) {
+          // Extract blacklist giver and receiver
+          const blacklistGiver = blacklistElement.querySelector('.blacklist-giver').innerHTML;
+          const blacklistReceiver = blacklistElement.querySelector('.blacklist-receiver').innerHTML;
 
-        // Hide the blacklist list if it is empty
-        if (this.blacklistList.children.length === 0) {
-          this.blacklistList.style.display = 'none';
+          // Find the index of the blacklist to remove in the blacklist array
+          const blacklistIndex = this.blacklist.findIndex(blacklist => blacklist.giver === blacklistGiver && blacklist.receiver === blacklistReceiver);
+
+          if (blacklistIndex !== -1) {
+            // Remove the blacklist from the array
+            this.blacklist.splice(blacklistIndex, 1);
+
+            // Remove the blacklist from the displayed list
+            blacklistElement.parentNode.removeChild(blacklistElement);
+
+            // Hide the blacklist list if it is empty
+            if (blacklistList.children.length === 1) {
+              blacklistList.style.display = 'none';
+            }
+          }
         }
-      }.bind(this));
+      });
     });
   }
 
   // Show the blacklist list
   showBlacklist(blacklistGiver, blacklistReceiver) {
+    // Define the blacklist list
+    let blacklistList = document.getElementsByClassName('blacklist-list')[0];
+
     // Add blacklist to the list
     let newBlacklist = document.createElement('div');
     newBlacklist.classList.add('blacklist');
@@ -262,8 +291,8 @@ export default class formLogic {
     <span class="blacklist-receiver">${blacklistReceiver}</span>
     <button class="remove-blacklist" title="Delete the blacklist"><i class="fa-solid fa-trash"></i></button>
     `;
-    this.blacklistList.appendChild(newBlacklist);
-    this.blacklistList.style.display = 'flex';
+    blacklistList.appendChild(newBlacklist);
+    blacklistList.style.display = 'flex';
   }
 
   // Check if there are empty fields in the current slide
@@ -380,7 +409,6 @@ export default class formLogic {
     this.addAParticipantButton.addEventListener('click', function (e) {
       e.preventDefault();
       this.addAParticipant();
-      this.removeAParticipant();
     }.bind(this));
     // Update the blacklist select elements
     this.slides[2].querySelectorAll('select').forEach(select => {

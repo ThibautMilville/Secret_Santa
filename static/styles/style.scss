@@ -222,6 +222,21 @@ body {
             }
           }
 
+          &#step4 {
+            align-items: center;
+
+            .santa-img {
+              width: 35%;
+              height: auto;
+              margin: 1rem 0;
+            }
+
+            p {
+              margin: 1rem 0 2rem 0;
+              text-align: center;
+            }
+          }
+
           &.active {
             display: flex;
           }

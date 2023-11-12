@@ -192,6 +192,18 @@ body main section form div.slide div.progress-indicator span {
 body main section form div.slide div.progress-indicator span.active {
   background-color: var(--white);
 }
+body main section form div.slide#step4 {
+  align-items: center;
+}
+body main section form div.slide#step4 .santa-img {
+  width: 35%;
+  height: auto;
+  margin: 1rem 0;
+}
+body main section form div.slide#step4 p {
+  margin: 1rem 0 2rem 0;
+  text-align: center;
+}
 body main section form div.slide.active {
   display: flex;
 }

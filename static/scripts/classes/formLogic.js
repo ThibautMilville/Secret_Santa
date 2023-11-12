@@ -341,35 +341,37 @@ export default class formLogic {
   }
 
   // Send data to the server
-  sendData() {
-    let data = {
-      participants: this.participants,
-      blacklist: this.blacklist,
-      message: this.message
-    };
+  async sendData() {
+    try {
+      let data = {
+        participants: this.participants,
+        blacklist: this.blacklist,
+        message: this.message
+      };
 
-    fetch('/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data),
-    }).then(response => {
+      const response = await fetch('/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data),
+      });
+
       if (response.status === 200) {
-        return response.json();
+        const responseData = await response.json();
+
+        if (responseData.response === "Emails sent successfully") {
+          this.nextStep();
+        } else {
+          alert('Emails could not be sent, please try again!');
+        }
       } else {
         alert('Something went wrong, please try again!');
       }
-    }).then(data => {
-      if (data.response) {
-        if (data.response === "Emails sent successfully") {
-          this.nextStep();
-        }
-        else {
-          alert('Something went wrong, please try again!');
-        }
-      }
-    });
+    } catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred, please try again!');
+    }
   }
 
   // Bindings

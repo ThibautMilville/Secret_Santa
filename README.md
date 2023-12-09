@@ -1,6 +1,6 @@
 <h1>Secret Santa</h1>
 
-Secret santa in HTML, SCSS, JavaScript, Python and Flask.
+Secret santa in HTML5, SCSS, JavaScript, Python and Flask.
 
 Launch the app here : https://secret-santa-thibaut-milville.vercel.app/
 

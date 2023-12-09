@@ -1,4 +1,4 @@
-<b>Secret Santa</b>
+<h1>Secret Santa</h1>
 
 Secret santa in HTML, SCSS, JavaScript, Python and Flask.
 

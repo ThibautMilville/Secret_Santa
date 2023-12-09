@@ -173,14 +173,14 @@ body main section form div.slide div.progress-buttons button {
   width: 48%;
   margin: 0;
 }
-body main section form div.slide div.progress-indicator {
+body main section form div.slide div.progress-bar {
   width: 100px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin: auto;
 }
-body main section form div.slide div.progress-indicator span {
+body main section form div.slide div.progress-bar span {
   display: block;
   width: 0.5rem;
   height: 0.5rem;
@@ -189,7 +189,7 @@ body main section form div.slide div.progress-indicator span {
   border-radius: 0.5rem;
   cursor: pointer;
 }
-body main section form div.slide div.progress-indicator span.active {
+body main section form div.slide div.progress-bar span.active {
   background-color: var(--white);
 }
 body main section form div.slide#step4 {

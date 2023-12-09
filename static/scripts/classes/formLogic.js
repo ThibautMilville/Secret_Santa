@@ -10,6 +10,7 @@ export default class formLogic {
     this.prevButtons = document.querySelectorAll('.prev-button');
     this.addAParticipantButton = document.getElementsByClassName('add-a-participant')[0];
     this.addABlacklistButton = document.getElementsByClassName('add-a-blacklist')[0];
+    this.progressBars = document.querySelectorAll('.progress-bar');
     this.submitButton = document.getElementById('submit-button');
 
     // Properties
@@ -30,6 +31,7 @@ export default class formLogic {
       this.slides[this.currentStep - 1].classList.remove("active");
       this.currentStep++;
       this.slides[this.currentStep - 1].classList.add("active");
+      sessionStorage.setItem('highestStepReached', this.currentStep);
     }
   }
 
@@ -406,6 +408,34 @@ export default class formLogic {
         e.preventDefault();
         this.prevStep();
       }.bind(this));
+    });
+    // Progress bar | Pagination
+    this.progressBars.forEach(progressBar => {
+      const progressBarSpans = progressBar.querySelectorAll('span');
+
+      progressBarSpans.forEach(span => {
+        span.addEventListener('click', (e) => {
+          e.preventDefault();
+          const clickedStep = parseInt(e.target.dataset.step);
+
+          const highestStepReached = sessionStorage.getItem('highestStepReached') || 0;
+
+          // Check if the clicked step is less than or equal to the highest step reached
+          if (clickedStep <= highestStepReached) {
+            this.currentStep = clickedStep;
+
+            // Check if the current step is between 0 and the number of slides
+            if (this.currentStep >= 0 && this.currentStep <= this.slides.length) {
+              this.slides.forEach(slide => {
+                slide.classList.remove("active");
+              });
+              this.slides[this.currentStep - 1].classList.add("active");
+            }
+          } else {
+            alert('Please complete the previous steps first!');
+          }
+        });
+      });
     });
     // Add and remove a participant buttons
     this.addAParticipantButton.addEventListener('click', function (e) {

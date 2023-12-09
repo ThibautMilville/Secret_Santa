@@ -20,17 +20,17 @@
         <div class="slide active" id="step1">
           <h2>Information</h2>
           <label for="name">Name</label>
-          <input type="text" name="name" id="name" placeholder="Your name" required>
+          <input type="text" name="name" id="name" placeholder="Your name" autocomplete="name" required>
           <label for="email">Email</label>
-          <input type="email" name="email" id="email" placeholder="Your email" required>
+          <input type="email" name="email" id="email" placeholder="Your email" autocomplete="email" required>
           <button type="button" class="next-button">Next<i class="fa-solid fa-arrow-right"></i></button>
           <!-- Progress bar -->
-          <div class="progress-indicator">
-            <span class="active"></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+          <div class="progress-bar">
+            <span class="active" data-step="1"></span>
+            <span data-step="2"></span>
+            <span data-step="3"></span>
+            <span data-step="4"></span>
+            <span data-step="5"></span>
           </div>
         </div>
         <!-- Step 2 - Participants list -->
@@ -55,12 +55,12 @@
           </div>
 
           <!-- Progress bar -->
-          <div class="progress-indicator">
-            <span></span>
-            <span class="active"></span>
-            <span></span>
-            <span></span>
-            <span></span>
+          <div class="progress-bar">
+            <span data-step="1"></span>
+            <span class="active" data-step="2"></span>
+            <span data-step="3"></span>
+            <span data-step="4"></span>
+            <span data-step="5"></span>
           </div>
         </div>
         <!-- Step 3 - Blacklist -->
@@ -90,12 +90,12 @@
           </div>
 
           <!-- Progress bar -->
-          <div class="progress-indicator">
-            <span></span>
-            <span></span>
-            <span class="active"></span>
-            <span></span>
-            <span></span>
+          <div class="progress-bar">
+            <span data-step="1"></span>
+            <span data-step="2"></span>
+            <span class="active" data-step="3"></span>
+            <span data-step="4"></span>
+            <span data-step="5"></span>
           </div>
         </div>
         <!-- Step 4 - Message -->
@@ -105,12 +105,12 @@
           <button type="button" class="prev-button last-one"><i class="fa-solid fa-arrow-left"></i>Previous</button>
           <button type="submit" id="submit-button">Send</button>
           <!-- Progress bar -->
-          <div class="progress-indicator">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span class="active"></span>
-            <span></span>
+          <div class="progress-bar">
+            <span data-step="1"></span>
+            <span data-step="2"></span>
+            <span data-step="3"></span>
+            <span class="active" data-step="4"></span>
+            <span data-step="5"></span>
           </div>
         </div>
         <!-- Step 5 - Confirmation -->
@@ -119,12 +119,12 @@
           <img src="https://imgs.search.brave.com/bk_qfVh2jElB-hMvZrH_wDUFdVl3d74sU3YimkooIBc/rs:fit:860:0:0/g:ce/aHR0cHM6Ly9jbGlw/YXJ0LWxpYnJhcnku/Y29tL2ltYWdlcy84/aTZveDVkYlQucG5n" alt="Santa" class="santa-img">
           <p>Thank you for using Secret Santa!</p>
           <!-- Progress bar -->
-          <div class="progress-indicator">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span class="active"></span>
+          <div class="progress-bar">
+            <span data-step="1"></span>
+            <span data-step="2"></span>
+            <span data-step="3"></span>
+            <span data-step="4"></span>
+            <span class="active" data-step="5"></span>
           </div>
         </div>
       </form>

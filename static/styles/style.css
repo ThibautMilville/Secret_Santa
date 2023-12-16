@@ -12,12 +12,17 @@
   margin: 0;
 }
 
+html {
+  height: -webkit-fill-available;
+}
+
 body {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
+  min-height: -webkit-fill-available;
   font-family: "Roboto", sans-serif;
   font-size: 16px;
   color: var(--black);

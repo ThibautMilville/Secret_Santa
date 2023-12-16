@@ -19,6 +19,8 @@ body {
   min-height: 100vh;
   font-family: "Roboto", sans-serif;
   font-size: 16px;
+  padding: 0;
+  margin: 0;
   color: var(--black);
 }
 body main {
@@ -220,5 +222,11 @@ body::before {
 @media (max-width: 768px) {
   body main {
     width: 85%;
+  }
+}
+/* Media Queries - Tablets */
+@media (min-width: 769px) and (max-width: 1024px) {
+  body main {
+    width: 70%;
   }
 }/*# sourceMappingURL=style.css.map */

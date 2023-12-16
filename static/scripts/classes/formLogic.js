@@ -336,12 +336,6 @@ export default class formLogic {
     }
   }
 
-  // Get the value of the textarea
-  getTextareaValue() {
-    // Get the value of the textarea
-    this.message = this.textarea.value;
-  }
-
   // Send data to the server
   async sendData() {
     try {
@@ -456,10 +450,15 @@ export default class formLogic {
       // this.removeABlacklist();
     }.bind(this));
     // Submit button
-    this.submitButton.addEventListener('click', function (e) {
+    this.submitButton.addEventListener('click', async function (e) {
       e.preventDefault();
-      this.getTextareaValue();
-      this.sendData();
+      this.message = this.textarea.value;
+    
+      if (this.message !== '') {
+        await this.sendData();
+      } else {
+        alert('Please write a message!');
+      }
     }.bind(this));
   }
 }

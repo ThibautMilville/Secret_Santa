@@ -12,7 +12,7 @@ To run the app locally, follow these steps:
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/thibaut-milville/secret-santa.git
+    git clone https://github.com/ThibautMilville/Secret_Santa.git
     cd secret-santa
     ```
 

@@ -51,6 +51,9 @@ You can deploy this app to Vercel or any other hosting service of your choice. E
 - **Configurability:**
   Easily configure the sender email and other parameters in the "constants" file.
 
+- **Responsive Design:**
+  The solution is designed to be responsive, ensuring a seamless experience across various devices and screen sizes.
+
 ## Technologies Used
 
 - **HTML5:**

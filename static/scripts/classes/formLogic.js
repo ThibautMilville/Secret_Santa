@@ -46,16 +46,14 @@ export default class formLogic {
 
   // Add a participant to the participants list
   addAParticipant() {
-    let inputs = this.slides[this.currentStep - 1].querySelectorAll('input');
-
     // Check if there are empty fields
-    if (this.currentStep === 1 && this.checkEmptyFieldsRequired()) {
+    let isFieldsEmpty = (this.currentStep === 1 && this.checkEmptyFieldsRequired()) || (this.currentStep !== 1 && this.checkEmptyFields());
+
+    if (isFieldsEmpty) {
       alert('Please fill all the fields!');
-    }
-    else if (this.currentStep != 1 && this.checkEmptyFields()) {
-      alert('Please fill all the fields!');
-    }
-    else {
+      return false;
+    } else {
+      let inputs = this.slides[this.currentStep - 1].querySelectorAll('input');
       let participantName = inputs[0].value;
       let participantEmail = inputs[1].value;
 
@@ -76,6 +74,8 @@ export default class formLogic {
         inputs[0].value = '';
         inputs[1].value = '';
       }
+
+      return true;
     }
   }
 
@@ -377,12 +377,16 @@ export default class formLogic {
       nextButton.addEventListener('click', function (e) {
         e.preventDefault();
         if (this.slides[this.currentStep - 1]) {
-          if ((this.slides[this.currentStep - 1] === this.slides[0]) || (this.slides[this.currentStep - 1] === this.slides[2])) {
+          // Check if the slide is the first or the third one
+          if ([this.slides[0], this.slides[2]].includes(this.slides[this.currentStep - 1])) {
             // If it is the first slide, add the participant
             if (this.slides[this.currentStep - 1] === this.slides[0]) {
-              this.addAParticipant();
+              if (this.addAParticipant()) {
+                this.nextStep();
+              }
+            } else {
+              this.nextStep();
             }
-            this.nextStep();
           }
           else if (this.slides[this.currentStep - 1] === this.slides[1]) {
             // If it is the second slide, check if there are at least 2 participants and init the blacklist
@@ -453,7 +457,7 @@ export default class formLogic {
     this.submitButton.addEventListener('click', async function (e) {
       e.preventDefault();
       this.message = this.textarea.value;
-    
+
       if (this.message !== '') {
         await this.sendData();
       } else {

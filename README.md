@@ -4,7 +4,7 @@ Welcome to the Secret Santa Web App! This application allows you to organize a S
 
 ![image](https://github.com/ThibautMilville/Secret_Santa/assets/87717065/b28d0293-8c88-4613-9cad-b29276abdd88)
 
-Launch the app here : https://secret-santa-thibaut-milville.vercel.app/
+Launch the app by clicking <a href="https://secret-santa-5c0ua90ll-thibaut-milville.vercel.app/">here</a>.
 
 ## Getting Started
 
